@@ -3,11 +3,11 @@ title: Vendor agent-skills skills (triage-pr 0.13.0)
 release_note: ""
 version:
 created_at: "2026-08-31T12:08:39Z"
-merged_at:
+merged_at: "2026-08-31T12:52:47Z"
 branch: a-1587-vendor-agent-skills-commitlint-config
-pr:
-commit:
-author: "rob@rheged.studio"
+pr: 37
+commit: 1315f4b
+author: rob@rheged.studio
 co_authors: []
 category: chore
 breaking: false
@@ -16,9 +16,9 @@ issues:
 affected_packages:
   - infrastructure
 stats:
-  files_changed:
-  loc_added:
-  loc_removed:
+  files_changed: 63
+  loc_added: 1125
+  loc_removed: 803
 ---
 
 ## Changed
