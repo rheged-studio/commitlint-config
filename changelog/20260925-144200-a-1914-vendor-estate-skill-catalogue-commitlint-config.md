@@ -7,7 +7,7 @@ merged_at:
 branch: a-1914-vendor-estate-skill-catalogue-commitlint-config
 pr:
 commit:
-author:
+author: Rob Easthope
 co_authors: []
 category: chore
 breaking: false
