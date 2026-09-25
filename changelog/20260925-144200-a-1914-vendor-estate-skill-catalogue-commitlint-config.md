@@ -1,7 +1,7 @@
 ---
 title: Vendor estate skill catalogue (A-1914)
 release_note: ""
-version:
+version: 1.0.3
 created_at: "2026-09-25T14:42:00Z"
 merged_at: "2026-09-25T14:53:44Z"
 branch: a-1914-vendor-estate-skill-catalogue-commitlint-config
@@ -19,6 +19,7 @@ stats:
   files_changed: 246
   loc_added: 9219
   loc_removed: 989
+  commits: 2
 ---
 
 ## Changed
