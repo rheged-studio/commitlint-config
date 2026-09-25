@@ -3,10 +3,10 @@ title: Vendor estate skill catalogue (A-1914)
 release_note: ""
 version:
 created_at: "2026-09-25T14:42:00Z"
-merged_at:
+merged_at: "2026-09-25T14:53:44Z"
 branch: a-1914-vendor-estate-skill-catalogue-commitlint-config
-pr:
-commit:
+pr: 42
+commit: 1681ff4
 author: Rob Easthope
 co_authors: []
 category: chore
@@ -16,9 +16,9 @@ issues:
 affected_packages:
   - infrastructure
 stats:
-  files_changed:
-  loc_added:
-  loc_removed:
+  files_changed: 246
+  loc_added: 9219
+  loc_removed: 989
 ---
 
 ## Changed
