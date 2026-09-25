@@ -15,7 +15,7 @@ scaffold time (`npx skills add … --copy`, A-776) and never overwrites itself.
 ## Use
 
 Run it through your agent (it drives the dry-run → confirm → write flow across the
-file edits + skills pull, the wrapped `initialise-skills` run, and the GitHub
+file edits + skills pull, the wrapped `rheged-skills-setup` run, and the GitHub
 settings), or invoke the bundled script directly:
 
 ```bash
@@ -46,7 +46,7 @@ policy), creates the `GO/NO GO` required-check ruleset (pinned to the GitHub Act
 integration), ensures the Trunk road-runner-bot changelog bypass (ADR 0004 / A-808),
 and enables the Release workflow.
 
-**Wrapped:** runs the `initialise-skills` skill **after** the skills pull and
+**Wrapped:** runs the `rheged-skills-setup` skill **after** the skills pull and
 gitignore strip to generate each skill's `config.json` (then commit those files).
 
 **Reported, not automated:** authoring `src/`, release-orchestrator onboarding,

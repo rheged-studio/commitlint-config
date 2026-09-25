@@ -4,7 +4,7 @@
 // Drives a repo freshly created from npm-package-template to a releasable state in
 // one idempotent pass. Deterministic file edits (including the shared-skills pull),
 // plus the non-copied GitHub settings, live here and in lib/; the human-facing
-// confirmation gates, the Linear-facts step, and the wrap of the initialise-skills
+// confirmation gates, the Linear-facts step, and the wrap of rheged-skills-setup
 // skill are owned by SKILL.md.
 //
 //   node scripts/initialise-package-repo.mjs [--dry-run|--write] [--json]
@@ -133,11 +133,11 @@ function runFileEdits(root, identity, write) {
       path: join(root, "infrastructure", "repo-config.yaml"),
       write,
     }),
-    // Refresh shared bundles from agent-skills before initialise-skills runs
+    // Refresh shared bundles from agent-skills before rheged-skills-setup runs
     // (SKILL.md owns that wrap). Repo-local initialise-package-repo is not in
     // the pull set.
     skillsPull: pullSharedSkills({ repoRoot: root, write }),
-    // Clear the template-seed skill-config gitignore so initialise-skills can
+    // Clear the template-seed skill-config gitignore so rheged-skills-setup can
     // write trackable config.json files the consumer commits (A-812).
     skillConfigIgnore: reconcileSkillConfigIgnore({
       path: join(root, ".gitignore"),
