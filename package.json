@@ -1,6 +1,6 @@
 {
   "name": "@rheged-studio/commitlint-config",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Shared commitlint configuration for Rheged Studio packages.",
   "keywords": [
     "commitlint",
