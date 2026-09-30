@@ -7,7 +7,7 @@ It **single-sources** the estate's allowed [Conventional Commit](https://www.con
 - the reusable CI workflow (`reusable-validate-commits.yml`) that validates a PR's `base..head` commit range, and
 - the local husky `pre-push` hook that runs the same range check before a push ever reaches CI.
 
-It extends [`@commitlint/config-conventional`](https://www.npmjs.com/package/@commitlint/config-conventional) and retains all of its defaults — only the list of allowed commit types is pinned to the estate's set.
+It extends [`@commitlint/config-conventional`](https://www.npmjs.com/package/@commitlint/config-conventional) and pins `type-enum` plus the estate's length rules (`header-max-length` 72, `body-max-line-length` 256, `footer-max-line-length` 256). Everything else is inherited.
 
 ## Install
 
@@ -57,10 +57,15 @@ The `type-enum` rule is set explicitly and is aligned to the estate's release-pl
 
 A `!` marker or a `BREAKING CHANGE:` footer promotes any type to a **major** bump.
 
-Everything else is inherited from `@commitlint/config-conventional` unchanged, including:
+Length rules are pinned explicitly ([A-1413](https://linear.app/rheged-studio/issue/A-1413)) so an upstream change to config-conventional's 100-character defaults cannot silently move the gate:
 
-- a non-empty commit type and subject,
-- the header max-length limit, and
+- `header-max-length` — **72** (error). Counts the whole first line (`type(scope): subject`). Git's usual subject ceiling.
+- `body-max-line-length` — **256** (error).
+- `footer-max-line-length` — **256** (error), so `BREAKING CHANGE:` sentences are not left trapped at 100.
+
+URL lines remain exempt (`/\bhttps?:\/\/\S+/`). Everything else is inherited from `@commitlint/config-conventional` unchanged, including:
+
+- a non-empty commit type and subject, and
 - `defaultIgnores` — merge (`Merge …`), revert (`Revert …`), `fixup!` and `squash!` messages are skipped automatically, so this config never needs to blanket-ignore them by author identity.
 
 ## Bot-authored commits
@@ -76,10 +81,10 @@ Everything else is inherited from `@commitlint/config-conventional` unchanged, i
 
 Dependabot's subjects come from a `commit-message` template in each repo's `.github/dependabot.yml`, which sets `prefix` (plus `prefix-development` for the npm ecosystem) and `include: scope`. Without that template Dependabot falls back to inferring a prefix from recent commit history — which may yield a Conventional subject, but is not guaranteed to, and can leave a bare `Bump …` that would fail the gate. The explicit template is what makes the output deterministic, which is why it is a prerequisite for making the gate a required check rather than an optional nicety ([A-980](https://linear.app/rheged-studio/issue/A-980)).
 
-Two inherited rules are worth knowing when reading a bot commit:
+The length pins are the real ceiling when reading a bot commit:
 
-- **`header-max-length` (100) is the one real ceiling.** This is why Dependabot bumps are grouped — a grouped subject stays short (`bump the actions group with 3 updates`), whereas an ungrouped multi-package subject can run past 100 characters and fail.
-- **`body-max-line-length` (100) ignores unbreakable lines.** Dependabot bodies contain compare URLs well over 100 characters; those pass, because the rule only trips on over-long lines that could have been wrapped. A long prose line still fails.
+- **`header-max-length` (72) is the subject ceiling.** This is why Dependabot bumps stay grouped — a grouped subject stays short (`bump the actions group with 3 updates`), whereas an ungrouped multi-package subject can run past 72 characters and fail. An ungrouped `@rheged-studio/markdownlint-config` bump sits at exactly 72.
+- **`body-max-line-length` and `footer-max-line-length` (256) ignore unbreakable lines.** Dependabot bodies contain compare URLs well over 256 characters; those pass, because the rule only trips on over-long lines that could have been wrapped (`/\bhttps?:\/\/\S+/`). A wrapable prose line still fails above 256.
 
 Should a bot ever need an exception, prefer fixing its commit template. A per-identity `ignores` entry is a documented last resort, not a first move.
 
