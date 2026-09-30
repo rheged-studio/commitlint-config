@@ -16,6 +16,8 @@ stats:
   loc_added: 119
   loc_removed: 26
   files_changed: 14
+  commits: 1
+version: 2.0.0
 ---
 
 ## Changed
@@ -23,4 +25,4 @@ stats:
 **Mechanical skills re-vendor for 72-character commit headers ([A-2069](https://linear.app/rheged-studio/issue/A-2069), parent [A-2059](https://linear.app/rheged-studio/issue/A-2059))**
 
 - Re-copy `send-it` 0.8.2 → 0.9.1 and `commit` 0.1.3 → 0.2.0 from `rheged-studio/agent-skills` `main` on `.claude` and `.agents` mirrors
-- Restore per-skill `config.json` after `--copy` (A-706); `triage-pr` untouched
+- Restore per-skill `config.json` after `--copy` ([A-706](https://linear.app/rheged-studio/issue/A-706)); `triage-pr` untouched
