@@ -2,10 +2,10 @@
 title: Pin header-max-length 72 and body/footer line length 256
 release_note: The shared commitlint gate now errors at header 72 and body/footer line length 256.
 created_at: "2026-09-30T13:22:35Z"
-merged_at:
+merged_at: "2026-09-30T16:32:09Z"
 branch: a-1413-pin-header-max-length-72-and-bodyfooter-line-length-256
-pr:
-commit:
+pr: 44
+commit: ce6e46d
 author: rob@rheged.studio
 co_authors: []
 category: feature
@@ -13,9 +13,9 @@ breaking: true
 issues:
   - A-1413
 stats:
-  files_changed:
-  loc_added:
-  loc_removed:
+  files_changed: 5
+  loc_added: 190
+  loc_removed: 22
   commits:
 ---
 
