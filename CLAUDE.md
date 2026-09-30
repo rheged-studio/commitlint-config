@@ -12,15 +12,16 @@ repo-specific guidance follows below.
 
 `@rheged-studio/commitlint-config` — the estate's shared [commitlint](https://commitlint.js.org)
 ruleset. `src/index.ts` default-exports a `UserConfig` that `extends`
-`@commitlint/config-conventional` (retaining its header-length, non-empty type/subject, and
-`defaultIgnores` behaviour for `Merge …`/`Revert …`/`fixup!`/`squash!`) and overrides only
-`type-enum` with the estate's explicit allowed types: `feat, fix, perf, revert, chore, docs, ci,
-build, refactor, test, style`. That list is set explicitly — even though it currently mirrors
+`@commitlint/config-conventional` (retaining its non-empty type/subject and `defaultIgnores`
+behaviour for `Merge …`/`Revert …`/`fixup!`/`squash!`) and pins `type-enum` plus the estate's
+length rules: `header-max-length` 72, `body-max-line-length` 256, `footer-max-line-length` 256
+(A-1413). The allowed types are `feat, fix, perf, revert, chore, docs, ci, build, refactor,
+test, style`. `type-enum` is set explicitly — even though it currently mirrors
 config-conventional's default — so an upstream change can't silently move the estate's commit gate,
 and it is kept aligned to the release-please bump rules (`feat` → minor; `fix`/`perf`/`revert` →
-patch; the rest → no release). See A-823 / A-979 for the rationale. Consumers install it and point
-their own `commitlint.config` at it (see the [README](README.md#usage) for the consumer-facing
-usage and [allowed types](README.md#allowed-commit-types)).
+patch; the rest → no release). See A-823 / A-979 / A-1413 for the rationale. Consumers install it
+and point their own `commitlint.config` at it (see the [README](README.md#usage) for the
+consumer-facing usage and [allowed types](README.md#allowed-commit-types)).
 
 Bots are validated like everyone else — there is **no identity denylist**, and none should be added.
 Every automated producer (Dependabot, release-please, `reusable-changelog-enrich.yml`) already emits
@@ -108,8 +109,8 @@ published artifact.
 
 The ruleset test resolves the **effective** config via `@commitlint/load` and lints sample messages
 via `@commitlint/lint`, so it asserts real commitlint behaviour (each allowed type accepted, `wip:`
-rejected, `subject-empty` still enforced, `defaultIgnores` honoured) rather than just the config
-object's shape.
+rejected, `subject-empty` still enforced, `defaultIgnores` honoured, header 72 / body and footer 256
+pinned independently, URL lines exempt) rather than just the config object's shape.
 
 ## Build / type-check / lint topology
 
