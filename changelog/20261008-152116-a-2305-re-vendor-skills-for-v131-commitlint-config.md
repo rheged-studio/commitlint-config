@@ -2,15 +2,18 @@
 title: Re-vendor skills for mattpocock/skills 1.3.1
 release_note:
 created_at: "2026-10-08T15:21:16Z"
-merged_at:
+merged_at: "2026-10-08T16:03:57Z"
 branch: a-2305-re-vendor-skills-for-v131-commitlint-config
-pr:
-commit:
+pr: 47
+commit: 77af157
 category: chore
 breaking: false
 issues:
   - A-2305
-stats: {}
+stats:
+  loc_added: 6661
+  loc_removed: 1919
+  files_changed: 121
 version:
 ---
 
