@@ -1,11 +1,7 @@
 {
   "linearTeamName": "Rheged Studio",
-  "issueKeys": [
-    "A"
-  ],
+  "issueKeys": ["R", "A"],
   "mainBranch": "main",
-  "protectedBranches": [
-    "main"
-  ],
+  "protectedBranches": ["main"],
   "linearWritebackDefault": "no"
 }
