@@ -11,7 +11,7 @@ co_authors: []
 category: chore
 breaking: false
 issues:
-  - A-1354
+  - R-1354
 stats:
   files_changed: 3
   loc_added: 26
@@ -22,4 +22,4 @@ version: 1.0.2
 
 ## Changed
 
-**CI workflow pins ([A-1354](https://linear.app/rheged-studio/issue/A-1354))** — float `acme-skunkworks/shared-workflows` reusable workflow references from pinned commit SHAs to `@v1` in `pkg-release.yml` and `validate-payload.yml`.
+**CI workflow pins ([R-1354](https://linear.app/rheged-studio/issue/R-1354))** — float `acme-skunkworks/shared-workflows` reusable workflow references from pinned commit SHAs to `@v1` in `pkg-release.yml` and `validate-payload.yml`.

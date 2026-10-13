@@ -15,28 +15,28 @@ ruleset. `src/index.ts` default-exports a `UserConfig` that `extends`
 `@commitlint/config-conventional` (retaining its non-empty type/subject and `defaultIgnores`
 behaviour for `Merge …`/`Revert …`/`fixup!`/`squash!`) and pins `type-enum` plus the estate's
 length rules: `header-max-length` 72, `body-max-line-length` 256, `footer-max-line-length` 256
-(A-1413). The allowed types are `feat, fix, perf, revert, chore, docs, ci, build, refactor,
+(R-1413). The allowed types are `feat, fix, perf, revert, chore, docs, ci, build, refactor,
 test, style`. `type-enum` is set explicitly — even though it currently mirrors
 config-conventional's default — so an upstream change can't silently move the estate's commit gate,
 and it is kept aligned to the release-please bump rules (`feat` → minor; `fix`/`perf`/`revert` →
-patch; the rest → no release). See A-823 / A-979 / A-1413 for the rationale. Consumers install it
+patch; the rest → no release). See R-823 / R-979 / R-1413 for the rationale. Consumers install it
 and point their own `commitlint.config` at it (see the [README](README.md#usage) for the
 consumer-facing usage and [allowed types](README.md#allowed-commit-types)).
 
 Bots are validated like everyone else — there is **no identity denylist**, and none should be added.
 Every automated producer (Dependabot, release-please, `reusable-changelog-enrich.yml`) already emits
 a Conventional subject; Dependabot's comes from the `commit-message` template in each repo's
-`.github/dependabot.yml`, which this repo also carries. See A-980 and
+`.github/dependabot.yml`, which this repo also carries. See R-980 and
 [README](README.md#bot-authored-commits) before adding any `ignores` entry.
 
-This repo was spawned from `npm-package-template` (A-985) and inherits its build/lint/test/release
+This repo was spawned from `npm-package-template` (R-985) and inherits its build/lint/test/release
 shell; the sections below describe that shell as it actually applies to **this package**.
 
 ## Decisions live in Linear, not ADRs
 
 Architectural and process decisions are recorded as **Linear issues**, not in-repo ADR files. The
-issue IDs threaded through this document and the code comments (e.g. `A-823`, `A-979`, `A-326`,
-`A-447`, `A-639`) are the durable decision record: follow the ID to Linear for the full rationale.
+issue IDs threaded through this document and the code comments (e.g. `R-823`, `R-979`, `R-326`,
+`R-447`, `R-639`) are the durable decision record: follow the ID to Linear for the full rationale.
 Capture new decisions as Linear issues and reference their IDs in commits, PR bodies, and comments
 rather than adding a `docs/adr/` tree. This package's work is catalogued in the **Commitlint**
 project in Linear (team **Rheged Studio**).
@@ -95,7 +95,7 @@ default; `/changelog` add-links is branch-scoped by default.
 
 > A repo-local `/initialise-package-repo` skill still sits under `.claude/skills/` (plus its
 > `infrastructure/tests/initialise-package-repo-*.test.mjs`). It is leftover template scaffolding for
-> spawning **new** repos from the template — it already ran on this repo (A-985) and plays no part in
+> spawning **new** repos from the template — it already ran on this repo (R-985) and plays no part in
 > this package's ongoing workflow.
 
 ## Source layout
@@ -154,8 +154,8 @@ This package dogfoods the org's own shared configs:
 
 Non-secret knobs shared by `ci.yml` and `pkg-release.yml` live in
 **`infrastructure/repo-config.yaml`**, loaded at runtime via `reusable-load-repo-config.yml@v1`
-(A-779), which allowlist-validates every value before writing it to `GITHUB_OUTPUT` (guards
-newline/`=` injection; A-330).
+(R-779), which allowlist-validates every value before writing it to `GITHUB_OUTPUT` (guards
+newline/`=` injection; R-330).
 
 | Key                         | Value / purpose                                                                                                         |
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
@@ -184,7 +184,7 @@ in this file.
   users (`github-actions[bot]`, `road-runner-bot[bot]`) and the release-please release commit
   (`chore(main): release <version>`) bypass. It also runs `pnpm lint:workflows` + `pnpm lint:yaml`
   as a last-line gate before CI, then a best-effort `commitlint --from origin/main --to HEAD`
-  range check (A-982) — skips with an installation hint if `@commitlint/cli` isn't available
+  range check (R-982) — skips with an installation hint if `@commitlint/cli` isn't available
   locally, if `dist/index.js` is missing (this repo's config extends the built artefact; run
   `pnpm build` after clone/clean), or if `origin/main` is not a resolvable ref; CI's
   `reusable-validate-commits` gate is still the authority. This repo dogfoods via
@@ -200,7 +200,7 @@ recommended.
 ## CI gate (`GO/NO GO`)
 
 `ci.yml` ends with a single **`GO/NO GO`** aggregator job — the one stable, estate-canonical gate
-(A-412/A-424). It `needs:` every real job (`config`, `lint`, `build-test`, `changelog-completeness`),
+(R-412/R-424). It `needs:` every real job (`config`, `lint`, `build-test`, `changelog-completeness`),
 runs `if: ${{ always() }}`, and a one-line `jq` verdict over `toJSON(needs)` succeeds **iff** every
 job `result` is `success` or `skipped`. The `lint` and `build-test` jobs are thin callers of the
 shared reusable workflows (see below); `config` is in `needs` so a config failure — which would skip
@@ -211,15 +211,15 @@ the callers, and skips are accepted — still fails the gate directly.
   only be minted by a GitHub App** — here, the repo's own Actions run — so a push-scoped token or a
   fork contributor cannot forge it. It is required on `main` via a ruleset pinned to the GitHub
   Actions integration (`integration_id: 15368`).
-- **Footguns (A-418).** The gate must **never** be path-filtered (a path-filtered required check sits
+- **Footguns (R-418).** The gate must **never** be path-filtered (a path-filtered required check sits
   Pending forever and blocks merges); `always()` is mandatory or the aggregator skips and never
   reports.
 
-The Conventional-Commit **PR-title** check (`validate-pr-title.yml`, the release bump signal, A-405)
+The Conventional-Commit **PR-title** check (`validate-pr-title.yml`, the release bump signal, R-405)
 and the fanned **`validate-payload`** check run as separate required workflows, not inside the
 `GO/NO GO` aggregator.
 
-## Shared reusable CI callers (A-447)
+## Shared reusable CI callers (R-447)
 
 The `lint` and `build-test` jobs in `ci.yml` are thin callers of the estate's shared reusable
 workflows in `rheged-studio/shared-workflows` (floating on `@v1`).
@@ -229,7 +229,7 @@ workflows in `rheged-studio/shared-workflows` (floating on `@v1`).
   — the Layer-1 action word-splits `eslint $ESLINT_ARGS` with `globstar` off, so a `**` glob would
   mis-expand; a directory lets ESLint's flat config resolve the file set recursively. `changelog-
 script: validate:changelog` (the reusable default is `changelog:validate`). The yaml lane uses
-  shared-workflows' centralised `.yamllint.yml` (A-438), so the repo's local `.yamllint.yml` now only
+  shared-workflows' centralised `.yamllint.yml` (R-438), so the repo's local `.yamllint.yml` now only
   feeds the pre-commit hook.
 - **`build-test`** → `reusable-build-test.yml` runs build (verification) + Vitest + ShellCheck + bats
   (`build-test / Build & Test`). `shellcheck-paths` passes the scripts dir + the three extensionless
@@ -244,7 +244,7 @@ validates the finalised entries before the release PR merges.
 ## Validating workflows and YAML
 
 Two non-Node tools augment Prettier's formatting pass with the semantic checks Prettier can't see
-(Actions schema, `${{ … }}` expression typos, duplicate keys, etc.). Since A-447, **CI runs them
+(Actions schema, `${{ … }}` expression typos, duplicate keys, etc.). Since R-447, **CI runs them
 inside the `lint` reusable caller** (the yaml lane); the install scripts below are the
 local/pre-commit + reference path.
 
@@ -255,7 +255,7 @@ local/pre-commit + reference path.
 
 `.yamllint.yml` at the repo root extends defaults, demotes line-length / indentation to warnings
 (Prettier owns formatting), allows the GitHub Actions truthy values (`on`, `off`, `yes`, `no`), and
-ignores `node_modules/`, `dist/`, `pnpm-lock.yaml`. It is **local + pre-commit only** since A-447 —
+ignores `node_modules/`, `dist/`, `pnpm-lock.yaml`. It is **local + pre-commit only** since R-447 —
 CI's yaml lane uses shared-workflows' centralised config. The local install-and-run logic lives in
 `infrastructure/scripts/ensure-yamllint.sh` / `ensure-actionlint.sh` — CI-unused now but kept as
 unit-tested reference (see `infrastructure/README.md`).
@@ -302,17 +302,17 @@ vitest for parsing/branching/octokit; inputs via env not argv; pure functions ex
 idempotent; pinned versions in env defaults.
 
 The five `scripts/*.sh` are **CI-unused reference** now — `ensure-yamllint.sh` / `ensure-actionlint.sh`
-/ `ensure-bats.sh` since A-447 (the reusable callers install those tools themselves), and
-`publish-via-raw-npm.sh` / `publish-to-github-packages.sh` since A-639 (the reusable release workflow
+/ `ensure-bats.sh` since R-447 (the reusable callers install those tools themselves), and
+`publish-via-raw-npm.sh` / `publish-to-github-packages.sh` since R-639 (the reusable release workflow
 inlines publishing). They remain as unit-tested reference shell (still exercised by `pnpm test:sh`)
 documenting the install-and-verify and idempotent-publish patterns.
 
 Changelog validate / completeness / enrich / finalise are provided by
 `@rheged-studio/changelog-core` (`pnpm validate:changelog`, `pnpm exec changelog-core
 check-completeness`). Post-merge write-back is the `changelog-enrich` job in `pkg-release.yml`
-calling `reusable-changelog-enrich.yml` (A-808 / A-821).
+calling `reusable-changelog-enrich.yml` (R-808 / R-821).
 
-CI (A-447): the `build-test` reusable caller runs ShellCheck (`infrastructure/scripts` + the husky
+CI (R-447): the `build-test` reusable caller runs ShellCheck (`infrastructure/scripts` + the husky
 hooks), Vitest, and bats against this directory; the `lint` caller runs `validate:changelog`; the
 `changelog-completeness` job runs the completeness gate. Locally, `pnpm lint:sh` / `pnpm test:sh`
 skip with install hints if `shellcheck` / `bats` aren't on PATH — `pnpm test` (vitest) always runs
@@ -321,14 +321,14 @@ because vitest is a node devDep.
 ## Dated changelog (`changelog/`)
 
 The `changelog/` directory is the **only** changelog in the repo — there is no root `CHANGELOG.md`
-(release-please runs with `skip-changelog`, A-371). It keeps **one dated Markdown file per PR** — a
+(release-please runs with `skip-changelog`, R-371). It keeps **one dated Markdown file per PR** — a
 browsable, per-change, machine-readable record (the `version` field, stamped at release only on
 release-triggering entries, ties an entry back to the published release it shipped in). The reusable
 release workflow sources its GitHub-release notes from the version-stamped entries. Full schema and
 lifecycle in **`changelog/README.md`**.
 
 Two-stage lifecycle — post-merge enrichment runs in-repo via `reusable-changelog-enrich.yml` on every
-push to `main` (A-808 / A-821):
+push to `main` (R-808 / R-821):
 
 1. **PR-time** — `/send-it` writes `changelog/<YYYYMMDD-HHMMSS>-<slug>.md` with the PR-time fields
    (and empty enrichment placeholders) for **every** PR — a non-release entry simply stays
@@ -348,11 +348,11 @@ reusable caller's changelog lane). Required frontmatter is relaxed to
 > **Currently disabled on this repo.** The package has not had its first publish yet (version
 > `0.0.0`, no `v0.0.0` tag), so the Release workflow is switched off
 > (`gh workflow disable Release`) to avoid a failing publish — and an auto-opened failure issue — on
-> every push to `main`. The first publish is bootstrapped by hand (A-986; see "Bootstrap publish"
+> every push to `main`. The first publish is bootstrapped by hand (R-986; see "Bootstrap publish"
 > below), and Release is enabled (`gh workflow enable Release`) as part of that. Everything below
 > describes the workflow as it runs once the package is published.
 >
-> **Thin caller (A-639).** The release workflow is `.github/workflows/pkg-release.yml` — a thin
+> **Thin caller (R-639).** The release workflow is `.github/workflows/pkg-release.yml` — a thin
 > caller of the estate's shared `reusable-pkg-release.yml`. A `config` job loads
 > `infrastructure/repo-config.yaml` and passes `npm-scope` / `node-version-file` / the registry URLs
 > to the reusable workflow, which holds all the release logic. The file is `pkg-release.yml` (npm
@@ -371,7 +371,7 @@ Once the package exists on npm AND its Trusted Publisher is configured against t
    commits**. CI runs build/lint, the conventional-PR-title lint, and the changelog-completeness
    gate.
 2. After merge, **Clacks** (road-runner-bot, a 15-min cron) runs
-   `release-please release-pr` — which ranks Conventional Commits on `main` (A-824) and writes
+   `release-please release-pr` — which ranks Conventional Commits on `main` (R-824) and writes
    `package.json` + `.release-please-manifest.json` — and opens the
    "`chore(main): release <version>`" release PR. On a later tick it **squash-merges** that release
    PR once the `GO/NO GO` check-run is green (fan-out PRs also stay squash).
@@ -390,7 +390,7 @@ requests" is deliberately off). A version-vs-tag detect step gates the publish: 
 freshly bumped → no tag yet) publishes. This keyless gate needs no Changesets. The bot's private key
 never touches this public repo's CI.
 
-**Cross-boundary hardening (A-326).** npm Trusted Publishing binds its OIDC subject to repository +
+**Cross-boundary hardening (R-326).** npm Trusted Publishing binds its OIDC subject to repository +
 workflow filename only — not the trigger event, ref, or actor — so anything able to run
 `pkg-release.yml` against an arbitrary ref could mint a valid publish credential. Three layers close
 that:
@@ -407,7 +407,7 @@ that:
   job `if:` also carries `github.event_name == 'push' && github.ref == 'refs/heads/main' && …` —
   redundant with the environment, kept as the in-workflow structural defence.
 
-**Build once, publish the exact artifact (A-328).** Build-time code (`pnpm install` + `tsc` +
+**Build once, publish the exact artifact (R-328).** Build-time code (`pnpm install` + `tsc` +
 `npm pack`) runs **only** in the unprivileged `build` job (`contents: read`, no `id-token`/`packages`/
 `contents: write`). Both publish legs download and ship that one tarball, so a compromised build-time
 dependency never runs alongside a mintable publish credential, and the npm tarball, the GitHub
@@ -418,15 +418,15 @@ Packages tarball, and the attested digest are guaranteed byte-identical.
 to a pinned version ≥ 11.5.1 (the floor Trusted Publishing needs; the Node-22-bundled npm is older).
 It is idempotent: if `npm view name@version` succeeds it exits 0 instead of re-publishing (which
 would 409). `infrastructure/scripts/publish-via-raw-npm.sh` is the unit-tested reference for that
-logic (A-174).
+logic (R-174).
 
-**GitHub Packages — secondary target (A-323).** npmjs.org (OIDC + provenance) is the canonical public
+**GitHub Packages — secondary target (R-323).** npmjs.org (OIDC + provenance) is the canonical public
 source; GitHub Packages is a secondary mirror. The `publish-github-packages` job is gated
 `needs: release` + the same main-only ref guard + `npm-release` environment; `packages: write` is
 scoped to this job only (never to the `release` job holding `id-token: write`). Auth is the ephemeral
 per-job `GITHUB_TOKEN`; provenance is a GitHub-native `actions/attest-build-provenance` over the exact
 tarball. It **hard-codes the target to `https://npm.pkg.github.com`, aborting if the registry URL
-drifts** (A-330), since the `GITHUB_TOKEN` is a bearer credential.
+drifts** (R-330), since the `GITHUB_TOKEN` is a bearer credential.
 `infrastructure/scripts/publish-to-github-packages.sh` is the unit-tested reference.
 
 > **Watch-item:** the npm leg's git tag + GitHub release are created explicitly in the reusable
@@ -437,7 +437,7 @@ Don't reintroduce `NPM_TOKEN` **as a CI secret** unless OIDC is verified broken.
 `.env`-based `NPM_TOKEN` is a different concern — laptop-driven publishes only, never CI.
 
 **Choosing the bump.** There is no changeset file. Feature PRs land as merge commits; release-please
-ranks Conventional Commits on `main` (A-824): `fix:` → patch, `feat:` → minor, a `!`
+ranks Conventional Commits on `main` (R-824): `fix:` → patch, `feat:` → minor, a `!`
 breaking marker (or a `BREAKING CHANGE:` footer) → major. Conventional PR titles stay required (CI)
 but are no longer the sole post-merge bump signal for feature work. Commitlint / `validate-commits`
 remain the per-commit gate. `/send-it` derives a Conventional title automatically; for
@@ -447,7 +447,7 @@ squash-merges the release PR; fan-out stays squash.
 
 ### Manual publish (break-glass — CI-down only, after the package exists)
 
-> **Break-glass, not a routine path (A-331).** Reach for it only when CI/OIDC is genuinely down. The
+> **Break-glass, not a routine path (R-331).** Reach for it only when CI/OIDC is genuinely down. The
 > `.env` `NPM_TOKEN` is a long-lived credential: store it in a secrets manager retrieved
 > just-in-time, give it the shortest viable lifetime, and rotate immediately on any exposure. It
 > never touches CI, and manual publishes ship without a provenance badge so they can't masquerade as
@@ -471,7 +471,7 @@ regenerate. `--provenance=false` is intentional (provenance needs a GitHub Actio
 laptop lacks). Don't try `pnpm run release:manual -- --dry-run` — the chained-script + `--` separator
 confuses npm; use `release:manual:dry`.
 
-## Bootstrap publish — the first publish (A-986)
+## Bootstrap publish — the first publish (R-986)
 
 The very first publish of a brand-new npm package **cannot go through CI**, for two compounding
 reasons:

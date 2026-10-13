@@ -1,11 +1,11 @@
 # Publish-only release workflow, migrated from the ~380-line inline release.yml to
-# a thin caller of the estate's shared reusable-pkg-release.yml (A-639 / A-447
+# a thin caller of the estate's shared reusable-pkg-release.yml (R-639 / R-447
 # pattern). All the release logic — the unprivileged build+pack job, the npm-OIDC
 # Trusted Publishing leg, the version-vs-tag gate, git tag + GitHub release, and
 # the secondary GitHub Packages mirror with a build-provenance attestation — now
 # lives in the reusable workflow. The security model is unchanged and enforced
-# upstream: build-once/publish-exact-artifact (A-328), the branch-restricted
-# `npm-release` environment + main-only ref guards (A-326), and no standing
+# upstream: build-once/publish-exact-artifact (R-328), the branch-restricted
+# `npm-release` environment + main-only ref guards (R-326), and no standing
 # NPM_TOKEN (OIDC only).
 #
 # The workflow NAME stays `Release` so `gh workflow enable/disable Release` and the
@@ -26,7 +26,7 @@ on:
     # (GitHub cannot derive on.push.branches from that file).
     branches:
       - main
-  # No workflow_dispatch (A-326). A dispatched run can target any ref, and npm
+  # No workflow_dispatch (R-326). A dispatched run can target any ref, and npm
   # Trusted Publishing binds its OIDC subject to repository + workflow filename
   # only — NOT the trigger/ref/actor — so publishing is push-to-main only. Re-run
   # a failed release via "Re-run jobs" on the original push run.
@@ -36,7 +36,7 @@ concurrency:
   cancel-in-progress: false # Queue releases instead of cancelling.
 
 # Defence-in-depth: deny default token permissions; each job declares only what it
-# needs (A-313). The reusable workflow's own jobs re-declare their least-privilege
+# needs (R-313). The reusable workflow's own jobs re-declare their least-privilege
 # scopes; the block below is the permission set handed to the called workflow.
 permissions: {}
 
@@ -62,7 +62,7 @@ jobs:
       npm-registry-url: ${{ needs.config.outputs.npm_registry_url }}
       github-packages-registry-url: ${{ needs.config.outputs.github_packages_registry_url }}
       # build:true (default) — this package has a real `build` script (tsc → dist);
-      # the A-624 build:false opt-out is only for build-less packages.
+      # the R-624 build:false opt-out is only for build-less packages.
     permissions:
       contents: write # Git tags + GitHub releases on publish.
       id-token: write # OIDC for npm Trusted Publishing + provenance attestation.
@@ -70,8 +70,8 @@ jobs:
       packages: write # Publish the secondary GitHub Packages mirror.
       attestations: write # Upload the GitHub-native build-provenance attestation.
 
-  # Post-merge changelog enrich / finalise via changelog-core (A-808 / A-821).
-  # Pin at A-821 merge SHA (shared-workflows#65) until @v1 moves.
+  # Post-merge changelog enrich / finalise via changelog-core (R-808 / R-821).
+  # Pin at R-821 merge SHA (shared-workflows#65) until @v1 moves.
   # secrets: inherit passes ROADRUNNER_PRIVATE_KEY for the App-token write-back.
   # Runs independently of `release` — both read the bumped version from the
   # committed package.json; no publish artifact is needed.

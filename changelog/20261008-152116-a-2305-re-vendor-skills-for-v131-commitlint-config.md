@@ -9,7 +9,7 @@ commit: 77af157
 category: chore
 breaking: false
 issues:
-  - A-2305
+  - R-2305
 stats:
   loc_added: 6661
   loc_removed: 1919

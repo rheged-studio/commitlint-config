@@ -11,7 +11,7 @@ co_authors: []
 category: chore
 breaking: false
 issues:
-  - A-1344
+  - R-1344
 stats:
   files_changed: 7
   loc_added: 65
@@ -22,7 +22,7 @@ version: 1.0.2
 
 ## Changed
 
-**Bump sibling `@acme-skunkworks/*` devDeps and adapt to markdownlint-config 3.x ([A-1344](https://linear.app/rheged-studio/issue/A-1344))**
+**Bump sibling `@acme-skunkworks/*` devDeps and adapt to markdownlint-config 3.x ([R-1344](https://linear.app/rheged-studio/issue/R-1344))**
 
 - Raise `@acme-skunkworks/changelog-core` to `^1.1.1`, `@acme-skunkworks/eslint-config` to `^1.1.3`, and `@acme-skunkworks/markdownlint-config` to `^3.0.0` (leave self at 1.0.1)
 - Exclude vendored skill trees and fan-out `AGENTS.md` from markdownlint (cli2 config, `lint:md` scripts, CI `markdown-globs`)

@@ -10,18 +10,18 @@ import type { UserConfig } from "@commitlint/types";
  * It single-sources the allowed Conventional-Commit types into one published
  * package so that both consumers of the commit gate — the reusable CI workflow
  * (`reusable-validate-commits.yml`) and the local husky `pre-push` range check —
- * float on the *same* list with zero drift (A-823 / A-979).
+ * float on the *same* list with zero drift (R-823 / R-979).
  *
  * The config extends `@commitlint/config-conventional` and retains its
  * non-empty type/subject defaults plus `defaultIgnores` for `Merge …` /
  * `Revert …` / `fixup!` / `squash!` messages. It pins four rules explicitly so
  * an upstream change cannot silently move the estate's gate:
  *
- * - `type-enum` — the estate's release-aligned types (A-823 / A-979).
- * - `header-max-length` — 72 (Git's usual subject ceiling; A-1413).
- * - `body-max-line-length` — 256 (A-1413).
+ * - `type-enum` — the estate's release-aligned types (R-823 / R-979).
+ * - `header-max-length` — 72 (Git's usual subject ceiling; R-1413).
+ * - `body-max-line-length` — 256 (R-1413).
  * - `footer-max-line-length` — 256, so `BREAKING CHANGE:` sentences are not
- *   left trapped at config-conventional's 100 (A-1413).
+ *   left trapped at config-conventional's 100 (R-1413).
  *
  * URL lines remain exempt via `@commitlint/ensure` (`/\bhttps?:\/\/\S+/`).
  * There is no identity denylist.
