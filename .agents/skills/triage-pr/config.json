@@ -4,7 +4,7 @@
   "replyOnAccept": true,
   "promoteOnGreen": true,
   "linearTeamName": "Rheged Studio",
-  "issueKeys": ["A"],
+  "issueKeys": ["R", "A"],
   "followUpLabel": "follow-up",
   "followUpProject": "Follow-up issues",
   "followUpState": "Backlog",
@@ -12,6 +12,15 @@
   "humanEnvelope": false,
   "reviewIdleMinutes": 5,
   "reviewWaitMaxMinutes": 20,
-  "reviewBotChecks": {},
+  "reviewBotChecks": {
+    "claude": {
+      "name": "claude-review",
+      "producer": "github-actions"
+    },
+    "coderabbitai": {
+      "name": "CodeRabbit",
+      "producer": "coderabbitai"
+    }
+  },
   "maxReviewRounds": 2
 }
