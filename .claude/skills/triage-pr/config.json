@@ -4,7 +4,7 @@
   "replyOnAccept": true,
   "promoteOnGreen": true,
   "linearTeamName": "Rheged Studio",
-  "issueKeys": ["R", "A"],
+  "issueKeys": ["R"],
   "followUpLabel": "follow-up",
   "followUpProject": "Follow-up issues",
   "followUpState": "Backlog",
