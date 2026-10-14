@@ -1,8 +1,8 @@
 ---
 title: Rebrand prose to Rheged Studio
-release_note: ''
-created_at: '2026-08-04T20:04:36Z'
-merged_at: '2026-08-04T20:07:01Z'
+release_note: ""
+created_at: "2026-08-04T20:04:36Z"
+merged_at: "2026-08-04T20:07:01Z"
 branch: a-1248-commitlint-config-rebrand-prose-in-claudemd-and-readme
 pr: 20
 commit: 8ac6d5f
@@ -11,7 +11,7 @@ co_authors: []
 category: docs
 breaking: false
 issues:
-  - A-1248
+  - R-1248
 stats:
   files_changed: 3
   loc_added: 26
@@ -22,4 +22,4 @@ version: 1.0.1
 
 ## Changed
 
-**Prose rebrand ([A-1248](https://linear.app/rheged-studio/issue/A-1248))** — replace ACME Skunkworks with Rheged Studio in `CLAUDE.md` and `README.md` human-facing prose. Package scope names left unchanged.
+**Prose rebrand ([R-1248](https://linear.app/rheged-studio/issue/R-1248))** — replace ACME Skunkworks with Rheged Studio in `CLAUDE.md` and `README.md` human-facing prose. Package scope names left unchanged.

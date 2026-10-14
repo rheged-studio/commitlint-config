@@ -57,7 +57,7 @@ The `type-enum` rule is set explicitly and is aligned to the estate's release-pl
 
 A `!` marker or a `BREAKING CHANGE:` footer promotes any type to a **major** bump.
 
-Length rules are pinned explicitly ([A-1413](https://linear.app/rheged-studio/issue/A-1413)) so an upstream change to config-conventional's 100-character defaults cannot silently move the gate:
+Length rules are pinned explicitly ([R-1413](https://linear.app/rheged-studio/issue/R-1413)) so an upstream change to config-conventional's 100-character defaults cannot silently move the gate:
 
 - `header-max-length` — **72** (error). Counts the whole first line (`type(scope): subject`). Git's usual subject ceiling.
 - `body-max-line-length` — **256** (error).
@@ -79,7 +79,7 @@ URL lines remain exempt (`/\bhttps?:\/\/\S+/`). Everything else is inherited fro
 | release-please                  | `chore: release main`                             |
 | `reusable-changelog-enrich.yml` | `chore(changelog): enrich post-merge metadata`    |
 
-Dependabot's subjects come from a `commit-message` template in each repo's `.github/dependabot.yml`, which sets `prefix` (plus `prefix-development` for the npm ecosystem) and `include: scope`. Without that template Dependabot falls back to inferring a prefix from recent commit history — which may yield a Conventional subject, but is not guaranteed to, and can leave a bare `Bump …` that would fail the gate. The explicit template is what makes the output deterministic, which is why it is a prerequisite for making the gate a required check rather than an optional nicety ([A-980](https://linear.app/rheged-studio/issue/A-980)).
+Dependabot's subjects come from a `commit-message` template in each repo's `.github/dependabot.yml`, which sets `prefix` (plus `prefix-development` for the npm ecosystem) and `include: scope`. Without that template Dependabot falls back to inferring a prefix from recent commit history — which may yield a Conventional subject, but is not guaranteed to, and can leave a bare `Bump …` that would fail the gate. The explicit template is what makes the output deterministic, which is why it is a prerequisite for making the gate a required check rather than an optional nicety ([R-980](https://linear.app/rheged-studio/issue/R-980)).
 
 The length pins are the real ceiling when reading a bot commit:
 

@@ -1,5 +1,5 @@
 // Unit tests for the initialise-package-repo skill's GitHub-settings logic
-// (A-663 / A-808). A fake runner records the `gh` argv and returns canned API
+// (R-663 / R-808). A fake runner records the `gh` argv and returns canned API
 // responses, so we assert both the idempotent "already present → no mutation"
 // path and the "absent → correct gh api call" path without touching a real repo.
 

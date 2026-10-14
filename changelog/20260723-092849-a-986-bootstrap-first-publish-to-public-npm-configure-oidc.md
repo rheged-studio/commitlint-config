@@ -1,8 +1,8 @@
 ---
 title: Bootstrap first publish to public npm at 1.0.0
 release_note: First public release of @acme-skunkworks/commitlint-config on npm.
-created_at: '2026-07-23T09:28:49Z'
-merged_at: '2026-07-23T09:53:01Z'
+created_at: "2026-07-23T09:28:49Z"
+merged_at: "2026-07-23T09:53:01Z"
 branch: a-986-bootstrap-first-publish-to-public-npm-configure-oidc-trusted
 pr: 8
 commit: 6bb3451
@@ -11,7 +11,7 @@ co_authors: []
 category: chore
 breaking: false
 issues:
-  - A-986
+  - R-986
 stats:
   files_changed: 3
   loc_added: 40
@@ -24,7 +24,7 @@ version: 1.0.1
 
 - Seeded `package.json` and `.release-please-manifest.json` at `1.0.0`, the initial
   published version for the bootstrap first publish to public npm
-  ([A-986](https://linear.app/rheged-studio/issue/A-986)). The `1.0.0` tarball was
+  ([R-986](https://linear.app/rheged-studio/issue/R-986)). The `1.0.0` tarball was
   published manually via the passkey/WebAuthn browser flow — npm has no
   pending-Trusted-Publisher flow and enforces interactive 2FA on the first publish of a
   new package, so publish #1 cannot go through CI. Seeding the manifest hands bump

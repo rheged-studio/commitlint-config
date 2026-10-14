@@ -23,7 +23,7 @@ const ALLOWED_TYPES = [
 ] as const;
 
 /**
- * Estate length pins (A-1413) — independent of the source so a silent drift in
+ * Estate length pins (R-1413) — independent of the source so a silent drift in
  * `./index.ts` fails the spec rather than tautologically matching it.
  */
 const HEADER_MAX_LENGTH = 72;

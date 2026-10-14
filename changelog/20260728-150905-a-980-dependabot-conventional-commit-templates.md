@@ -1,8 +1,8 @@
 ---
 title: Add npm ecosystem to Dependabot with Conventional commit prefixes
 release_note:
-created_at: '2026-07-28T15:09:05Z'
-merged_at: '2026-07-28T16:05:51Z'
+created_at: "2026-07-28T15:09:05Z"
+merged_at: "2026-07-28T16:05:51Z"
 branch: a-980-dependabot-conventional-commit-templates
 pr: 11
 commit: 1f1905c
@@ -11,7 +11,7 @@ co_authors: []
 category: chore
 breaking: false
 issues:
-  - A-980
+  - R-980
 stats:
   files_changed: 4
   loc_added: 97
@@ -23,12 +23,12 @@ version: 1.0.1
 ## Added
 
 - An `npm` package ecosystem in `.github/dependabot.yml`
-  ([A-980](https://linear.app/rheged-studio/issue/A-980)), grouped weekly so one lockfile
+  ([R-980](https://linear.app/rheged-studio/issue/R-980)), grouped weekly so one lockfile
   churn lands or reverts atomically. Its `commit-message` template sets `prefix`,
   `prefix-development` and `include: scope`, so bumps read `chore(deps): …` and
   `chore(deps-dev): …`. Setting both prefixes matters: `prefix` alone leaves
   development-dependency bumps on Dependabot's own default subject, which is not
-  Conventional and would fail the gate once it becomes a required check ([A-983](https://linear.app/rheged-studio/issue/A-983)).
+  Conventional and would fail the gate once it becomes a required check ([R-983](https://linear.app/rheged-studio/issue/R-983)).
 - A "Bot-authored commits" section in the README recording every automated commit
   producer and its subject, and stating that bots are validated like everyone else —
   there is **no identity denylist**, and a per-identity `ignores` entry is a documented

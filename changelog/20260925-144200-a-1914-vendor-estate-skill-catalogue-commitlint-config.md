@@ -1,5 +1,5 @@
 ---
-title: Vendor estate skill catalogue (A-1914)
+title: Vendor estate skill catalogue (R-1914)
 release_note: ""
 version: 1.0.3
 created_at: "2026-09-25T14:42:00Z"
@@ -12,7 +12,7 @@ co_authors: []
 category: chore
 breaking: false
 issues:
-  - A-1914
+  - R-1914
 affected_packages:
   - infrastructure
 stats:
@@ -24,9 +24,9 @@ stats:
 
 ## Changed
 
-**Vendor Rheged + Matt Pocock estate catalogue ([A-1914](https://linear.app/rheged-studio/issue/A-1914))**
+**Vendor Rheged + Matt Pocock estate catalogue ([R-1914](https://linear.app/rheged-studio/issue/R-1914))**
 
 - Install the full estate skill catalogue via `rheged-skills-setup --install --write` (Rheged ship set + Matt Pocock packs) into `.claude/skills/` and `.agents/skills/`
-- Retire legacy `initialise-skills` (bundles and command shim); reconcile configs from HEAD ([A-706](https://linear.app/rheged-studio/issue/A-706))
+- Retire legacy `initialise-skills` (bundles and command shim); reconcile configs from HEAD ([R-706](https://linear.app/rheged-studio/issue/R-706))
 - Preserve disk-only `initialise-package-repo`; refresh `.claude/skills.lock` and `skills-lock.json`
 - Linear identity unchanged: Rheged Studio / `rheged-studio` / issue key `A`

@@ -8,7 +8,7 @@ co_authors: []
 category: chore
 breaking: false
 issues:
-  - A-2069
+  - R-2069
 merged_at: "2026-09-30T16:16:21Z"
 commit: 1715d0d
 pr: 45
@@ -22,7 +22,7 @@ version: 2.0.0
 
 ## Changed
 
-**Mechanical skills re-vendor for 72-character commit headers ([A-2069](https://linear.app/rheged-studio/issue/A-2069), parent [A-2059](https://linear.app/rheged-studio/issue/A-2059))**
+**Mechanical skills re-vendor for 72-character commit headers ([R-2069](https://linear.app/rheged-studio/issue/R-2069), parent [R-2059](https://linear.app/rheged-studio/issue/R-2059))**
 
 - Re-copy `send-it` 0.8.2 → 0.9.1 and `commit` 0.1.3 → 0.2.0 from `rheged-studio/agent-skills` `main` on `.claude` and `.agents` mirrors
-- Restore per-skill `config.json` after `--copy` ([A-706](https://linear.app/rheged-studio/issue/A-706)); `triage-pr` untouched
+- Restore per-skill `config.json` after `--copy` ([R-706](https://linear.app/rheged-studio/issue/R-706)); `triage-pr` untouched

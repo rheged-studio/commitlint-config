@@ -11,7 +11,7 @@ co_authors: []
 category: feature
 breaking: true
 issues:
-  - A-1413
+  - R-1413
 stats:
   files_changed: 5
   loc_added: 190
@@ -31,14 +31,14 @@ Keep Conventional subjects at or under 72 characters (the whole first line:
 stay at or under 256. URL lines remain exempt (`/\bhttps?:\/\/\S+/`). There is
 no identity denylist.
 
-Merge of this change waits on [A-2055](https://linear.app/rheged-studio/issue/A-2055) (and its skill fan-out) so authors already
+Merge of this change waits on [R-2055](https://linear.app/rheged-studio/issue/R-2055) (and its skill fan-out) so authors already
 emit short subjects before the gate tightens.
 
 ## Changed
 
 - Pin `header-max-length` 72, `body-max-line-length` 256, and
   `footer-max-line-length` 256 in `src/index.ts` alongside the existing
-  `type-enum` pin ([A-1413](https://linear.app/rheged-studio/issue/A-1413)).
+  `type-enum` pin ([R-1413](https://linear.app/rheged-studio/issue/R-1413)).
 - Extend the colocated behavioural tests with independent number pins, 72/73
   header, 256/257 body and footer, URL exemption, and the 174-character Tempest
   trial body.

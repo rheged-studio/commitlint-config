@@ -2,7 +2,7 @@
 
 One Markdown file per change, capturing what changed and why. Entries are written by the `/send-it` slash command at PR-creation time and finalised by GitHub Actions after merge.
 
-This is the curated, per-change, machine-readable record — and, since the move to release-please (which runs with `skip-changelog`, A-371), the **only** changelog in the repo: there is no root `CHANGELOG.md`. These entries are also what the release workflow (`pkg-release.yml`, via the shared reusable workflow) sources the GitHub-release notes from. Release-triggering entries are stamped with a `version` at release finalisation, tying them back to the published release they shipped in; non-release entries stay versionless.
+This is the curated, per-change, machine-readable record — and, since the move to release-please (which runs with `skip-changelog`, R-371), the **only** changelog in the repo: there is no root `CHANGELOG.md`. These entries are also what the release workflow (`pkg-release.yml`, via the shared reusable workflow) sources the GitHub-release notes from. Release-triggering entries are stamped with a `version` at release finalisation, tying them back to the published release they shipped in; non-release entries stay versionless.
 
 ## File naming
 
@@ -29,7 +29,7 @@ author: "you@example.com"
 co_authors: []
 category: feature # feature | fix | chore | docs | refactor | perf
 breaking: false
-issues: ["A-123"] # Linear issue IDs
+issues: ["R-123"] # Linear issue IDs
 stats: # filled at release (finalisation)
   files_changed: # integer
   loc_added: # integer
@@ -95,7 +95,7 @@ Only include `Added` / `Changed` / `Fixed` headings that have entries.
 ## Lifecycle
 
 Two stages — post-merge enrichment runs in-repo via `reusable-changelog-enrich.yml`
-on every push to `main` (A-808 / A-821):
+on every push to `main` (R-808 / R-821):
 
 1. **Create or update an entry (PR-time):** run `/send-it` from a feature branch. It writes the entry with the PR-time fields (`title`, `release_note`, `created_at`, `branch`, `author`, `co_authors`, `category`, `breaking`, `issues`) and empty placeholders for the rest. The entry merges to `main` with the feature PR and waits.
 2. **Post-merge / release:** `pkg-release.yml`'s `changelog-enrich` job (`mode: finalise`) resolves the just-merged PR, fills `merged_at`/`commit`/`pr`/`stats` via `changelog-core enrich`, and stamps `version` via `changelog-core finalise` only when `package.json`'s version has no matching git tag (release-please cut). Write-back pushes only `changelog/**` as `road-runner-bot[bot]` (ADR 0004).
