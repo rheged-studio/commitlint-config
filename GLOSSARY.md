@@ -37,7 +37,7 @@ A `!` after the type or a `BREAKING CHANGE:` footer, which promotes any type to 
 _Avoid_: Breaking flag, major tag
 
 **Header ceiling**:
-The `header-max-length` of 72 characters, counting the whole first line (`type(scope): subject`). It is why Dependabot bumps must stay grouped.
+The `header-max-length` of 72 characters, counting the whole first line (`type(scope): subject`). It is why automated dependency bumps must stay grouped.
 _Avoid_: Subject limit, title limit
 
 **Line ceiling**:
@@ -45,7 +45,7 @@ The 256-character limit on each body line (`body-max-line-length`) and footer li
 _Avoid_: Body limit, wrap limit
 
 **URL exemption**:
-The carve-out that lets a line containing an unbreakable `http(s)` URL pass the line ceiling, so Dependabot compare links are accepted.
+The carve-out that lets a line containing an unbreakable `http(s)` URL pass the line ceiling, so bot-generated compare links are accepted.
 _Avoid_: Link exception
 
 **Default ignores**:

@@ -24,9 +24,9 @@ and point their own `commitlint.config` at it (see the [README](README.md#usage)
 consumer-facing usage and [allowed types](README.md#allowed-commit-types)).
 
 Bots are validated like everyone else — there is **no identity denylist**, and none should be added.
-Every automated producer (Dependabot, release-please, `reusable-changelog-enrich.yml`) already emits
-a Conventional subject; Dependabot's comes from the `commit-message` template in each repo's
-`.github/dependabot.yml`, which this repo also carries. See R-980 and
+Every automated producer (release-please, `reusable-changelog-enrich.yml`) already emits a
+Conventional subject. Dependabot is switched off estate-wide, so this repo no longer carries a
+`.github/dependabot.yml`. See R-980 and
 [README](README.md#bot-authored-commits) before adding any `ignores` entry.
 
 This repo was spawned from `npm-package-template` (R-985) and inherits its build/lint/test/release
