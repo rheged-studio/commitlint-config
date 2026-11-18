@@ -72,19 +72,17 @@ URL lines remain exempt (`/\bhttps?:\/\/\S+/`). Everything else is inherited fro
 
 **There is no identity denylist.** Bots are validated exactly like everyone else — the config has no `ignores` entry, and none should be added. Every automated commit producer in the estate already emits a Conventional subject, verified against this ruleset:
 
-| Producer                        | Subject                                           |
-| ------------------------------- | ------------------------------------------------- |
-| Dependabot (`github-actions`)   | `ci(deps): bump the actions group with 3 updates` |
-| Dependabot (npm)                | `chore(deps): …` / `chore(deps-dev): …`           |
-| release-please                  | `chore: release main`                             |
-| `reusable-changelog-enrich.yml` | `chore(changelog): enrich post-merge metadata`    |
+| Producer                        | Subject                                        |
+| ------------------------------- | ---------------------------------------------- |
+| release-please                  | `chore: release main`                          |
+| `reusable-changelog-enrich.yml` | `chore(changelog): enrich post-merge metadata` |
 
-Dependabot's subjects come from a `commit-message` template in each repo's `.github/dependabot.yml`, which sets `prefix` (plus `prefix-development` for the npm ecosystem) and `include: scope`. Without that template Dependabot falls back to inferring a prefix from recent commit history — which may yield a Conventional subject, but is not guaranteed to, and can leave a bare `Bump …` that would fail the gate. The explicit template is what makes the output deterministic, which is why it is a prerequisite for making the gate a required check rather than an optional nicety ([R-980](https://linear.app/rheged-studio/issue/R-980)).
+Dependabot is switched off estate-wide, so it no longer produces commits. If it is ever re-enabled, give each repo's `.github/dependabot.yml` a `commit-message` template (`prefix`, plus `prefix-development` for the npm ecosystem, and `include: scope`) and group its updates. Without the template Dependabot infers a prefix from recent history and can leave a bare `Bump …` that fails the gate ([R-980](https://linear.app/rheged-studio/issue/R-980)).
 
 The length pins are the real ceiling when reading a bot commit:
 
-- **`header-max-length` (72) is the subject ceiling.** This is why Dependabot bumps stay grouped — a grouped subject stays short (`bump the actions group with 3 updates`), whereas an ungrouped multi-package subject can run past 72 characters and fail. An ungrouped `@rheged-studio/markdownlint-config` bump sits at exactly 72.
-- **`body-max-line-length` and `footer-max-line-length` (256) ignore unbreakable lines.** Dependabot bodies contain compare URLs well over 256 characters; those pass, because the rule only trips on over-long lines that could have been wrapped (`/\bhttps?:\/\/\S+/`). A wrapable prose line still fails above 256.
+- **`header-max-length` (72) is the subject ceiling.** Automated dependency-bump subjects need grouping to stay short (`bump the actions group with 3 updates`); an ungrouped multi-package subject can run past 72 characters and fail.
+- **`body-max-line-length` and `footer-max-line-length` (256) ignore unbreakable lines.** Bot bodies can contain compare URLs well over 256 characters; those pass, because the rule only trips on over-long lines that could have been wrapped (`/\bhttps?:\/\/\S+/`). A wrapable prose line still fails above 256.
 
 Should a bot ever need an exception, prefer fixing its commit template. A per-identity `ignores` entry is a documented last resort, not a first move.
 
@@ -92,7 +90,7 @@ Should a bot ever need an exception, prefer fixing its commit template. A per-id
 
 The gate is designed to track this config's **latest published version** rather than pinning it, mirroring how the estate floats on its shared GitHub workflows (`@v1`). The reusable CI workflow installs the config fresh on each run, so a caret range with no committed lockfile resolves to the latest published version — a ruleset change reaches the gate on its next run, with no per-repo bump PR.
 
-Where a consumer instead commits a lockfile (for example the local pre-push hook running in a repo that pins its dev-dependencies), the resolved version stays put until it is updated: the package is Dependabot-versioned like the estate's other shared packages, so those consumers get update PRs. The trade-off is deliberate — because a ruleset change reaches the floating consumers immediately, edits must be made carefully.
+Where a consumer instead commits a lockfile (for example the local pre-push hook running in a repo that pins its dev-dependencies), the resolved version stays put until it is updated: with Dependabot switched off estate-wide, those consumers must bump it themselves. The trade-off is deliberate — because a ruleset change reaches the floating consumers immediately, edits must be made carefully.
 
 ## Development
 
